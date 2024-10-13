@@ -6,7 +6,7 @@ export default defineConfig({
   server: {
     proxy: {
       "/api": {
-        target: "https://mern-trvael-app.onrender.com",
+        target: "http://localhost:8000",
         secure: false,
       },
     },
