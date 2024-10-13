@@ -24,6 +24,7 @@ mongoose
 app.use(
   cors({
     origin: process.env.SERVER_URL,
+    credentials: true,
   })
 );
 app.use(express.json());
@@ -36,20 +37,21 @@ app.use("/api/rating", ratingRoute);
 app.use("/api/booking", bookingRoute);
 
 if (process.env.NODE_ENV_CUSTOM === "production") {
-  //static files
+  // Serve static files
   app.use(express.static(path.join(__dirname, "/client/dist")));
 
   app.get("*", (req, res) => {
     res.sendFile(path.join(__dirname, "client", "dist", "index.html"));
   });
 } else {
-  // //rest api
+  // API endpoint for development
   app.use("/", (req, res) => {
     res.send("Welcome to travel and tourism app");
   });
 }
 
-//port
-app.listen(8000, () => {
-  console.log("listening on 8000");
+// Dynamic port configuration for deployment
+const port = process.env.PORT || 8000;
+app.listen(port, () => {
+  console.log(`Server is running on port ${port}`);
 });
